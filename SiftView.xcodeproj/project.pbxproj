@@ -14,6 +14,8 @@
 		C5CE91CC196E189000159784 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5CE91CA196E189000159784 /* Main.storyboard */; };
 		C5CE91CE196E189000159784 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5CE91CD196E189000159784 /* Images.xcassets */; };
 		C5CE91DA196E189000159784 /* SiftViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CE91D9196E189000159784 /* SiftViewTests.m */; };
+		C5CE91E6196E18F300159784 /* SiftView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CE91E5196E18F300159784 /* SiftView.m */; };
+		C5CE91E9196E1D2700159784 /* SiftCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CE91E8196E1D2700159784 /* SiftCardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,10 @@
 		C5CE91D3196E189000159784 /* SiftViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SiftViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CE91D8196E189000159784 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5CE91D9196E189000159784 /* SiftViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SiftViewTests.m; sourceTree = "<group>"; };
+		C5CE91E4196E18F300159784 /* SiftView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiftView.h; path = SiftView/SiftView.h; sourceTree = "<group>"; };
+		C5CE91E5196E18F300159784 /* SiftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SiftView.m; path = SiftView/SiftView.m; sourceTree = "<group>"; };
+		C5CE91E7196E1D2700159784 /* SiftCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiftCardView.h; path = SiftView/SiftCardView.h; sourceTree = "<group>"; };
+		C5CE91E8196E1D2700159784 /* SiftCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SiftCardView.m; path = SiftView/SiftCardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,7 @@
 				C5CE91C2196E189000159784 /* AppDelegate.m */,
 				C5CE91C7196E189000159784 /* ViewController.h */,
 				C5CE91C8196E189000159784 /* ViewController.m */,
+				C5CE91E3196E18A300159784 /* SiftView */,
 				C5CE91CA196E189000159784 /* Main.storyboard */,
 				C5CE91CD196E189000159784 /* Images.xcassets */,
 				C5CE91C4196E189000159784 /* SiftView.xcdatamodeld */,
@@ -117,6 +124,17 @@
 				C5CE91D8196E189000159784 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C5CE91E3196E18A300159784 /* SiftView */ = {
+			isa = PBXGroup;
+			children = (
+				C5CE91E4196E18F300159784 /* SiftView.h */,
+				C5CE91E5196E18F300159784 /* SiftView.m */,
+				C5CE91E7196E1D2700159784 /* SiftCardView.h */,
+				C5CE91E8196E1D2700159784 /* SiftCardView.m */,
+			);
+			name = SiftView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,7 +238,9 @@
 			files = (
 				C5CE91C3196E189000159784 /* AppDelegate.m in Sources */,
 				C5CE91C6196E189000159784 /* SiftView.xcdatamodeld in Sources */,
+				C5CE91E6196E18F300159784 /* SiftView.m in Sources */,
 				C5CE91C9196E189000159784 /* ViewController.m in Sources */,
+				C5CE91E9196E1D2700159784 /* SiftCardView.m in Sources */,
 				C5CE91C0196E189000159784 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
