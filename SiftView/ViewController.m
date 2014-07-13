@@ -51,6 +51,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     _siftView = [[SiftView alloc] initWithFrame:self.view.bounds data:_cardData];
+    [_siftView.rightActionButton setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+    [_siftView.leftActionButton setImage:[UIImage imageNamed:@"remove"] forState:UIControlStateNormal];
     [self.view addSubview:_siftView];
 }
 

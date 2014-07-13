@@ -36,12 +36,14 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     _rightActionButton.frame = CGRectMake(_viewWidth, _viewHeight/2 - 30, 80, 60);
     _rightActionButton.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.95];
     _rightActionButton.layer.cornerRadius = 5.f;
+    _rightActionButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 22);
     [self addSubview:_rightActionButton];
     
     _leftActionButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _leftActionButton.frame = CGRectMake(-80, _viewHeight/2 - 30, 80, 60);
     _leftActionButton.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.95];
     _leftActionButton.layer.cornerRadius = 5.f;
+    _leftActionButton.contentEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 0);
     [self addSubview:_leftActionButton];
     
     _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCard:)];
@@ -103,6 +105,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
             else{
                 cardDirection = SwipeDirectionCenter;
             }
+            [self hideActionButtons];
             [self shiftCards:SwipeDirectionCenter];
             [self animate:_currentSiftCard inDirection:cardDirection];
         }
@@ -182,12 +185,12 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
             leftButtonFrame = _leftActionButton.frame;
     
     if(direction == SwipeDirectionRight){
-            rightButtonFrame.origin.x = _viewWidth;
-            leftButtonFrame.origin.x = -20;
-    }
-    else{
         rightButtonFrame.origin.x = _viewWidth - 60;
         leftButtonFrame.origin.x = -80;
+    }
+    else{
+        rightButtonFrame.origin.x = _viewWidth;
+        leftButtonFrame.origin.x = -20;
     }
     
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
@@ -203,7 +206,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
             leftButtonFrame = _leftActionButton.frame;
     rightButtonFrame.origin.x = _viewWidth;
     leftButtonFrame.origin.x = -80;
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+    [UIView animateWithDuration:0.2 delay:0.3 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         _rightActionButton.frame = rightButtonFrame;
         _leftActionButton.frame = leftButtonFrame;
     } completion:^(BOOL finished) {
