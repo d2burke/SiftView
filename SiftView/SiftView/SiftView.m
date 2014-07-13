@@ -24,6 +24,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     _cardWidth = 300;
     _cardHeight = _cardWidth;
     _currentlyShiftingCards = NO;
+    _cardDisplayCount = 3;
     _swipeActionThreshold = 120;
     
     _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCard:)];
@@ -161,20 +162,17 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     
     NSArray *cards = [[self.subviews reverseObjectEnumerator] allObjects];
     for(SiftCardView *card in cards){
-        if([_siftViewCards indexOfObject:card] > 0 && [_siftViewCards indexOfObject:card] < 3){
+        if([_siftViewCards indexOfObject:card] > 0 && [_siftViewCards indexOfObject:card] < _cardDisplayCount){
             CGPoint cardCenter = card.center;
-            
             if(direction == SwipeDirectionCenter){
                 cardCenter.x = _originalCardCenter.x;
             }
             else{
                 cardCenter.x = (direction == SwipeDirectionRight) ?
-                _originalCardCenter.x + (3-[_siftViewCards indexOfObject:card])*10 :
-                _originalCardCenter.x - (3-[_siftViewCards indexOfObject:card])*10;
-                NSLog(@"Card Index: %i", (int)[_siftViewCards indexOfObject:card]);
+                _originalCardCenter.x + (_cardDisplayCount-[_siftViewCards indexOfObject:card])*10 :
+                _originalCardCenter.x - (_cardDisplayCount-[_siftViewCards indexOfObject:card])*10;
             }
-            
-            [UIView animateWithDuration:0.2 delay:0.1 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 card.center = cardCenter;
             } completion:^(BOOL finished) {
                 if([_siftViewCards indexOfObject:card] == 2){
@@ -188,7 +186,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
 -(void)shuffleCardsForward{
     for(SiftCardView *card in _siftViewCards){
         int cardIndex = [_siftViewCards indexOfObject:card];
-        if(cardIndex > 2) break;
+        if(cardIndex > _cardDisplayCount-1) break;
         [UIView animateWithDuration:0.2 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             CGFloat scale = 1 - (cardIndex * 0.01);
             CGFloat cardAlpha = 1 - (cardIndex * 0.2);
