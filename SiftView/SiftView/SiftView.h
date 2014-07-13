@@ -22,7 +22,8 @@ typedef enum{
 
 typedef enum{
     SwipeDirectionLeft,
-    SwipeDirectionRight
+    SwipeDirectionRight,
+    SwipeDirectionCenter
 } SwipeDirection;
 
 typedef enum{
@@ -46,7 +47,9 @@ UIGestureRecognizerDelegate
 @property (nonatomic) CGFloat cardHeight;
 @property (nonatomic) CGPoint cardCenter;
 @property (nonatomic) CGPoint originalCardCenter;
+@property (nonatomic) CGFloat swipeActionThreshold;
 @property (nonatomic) int cardDisplayCount;
+@property (nonatomic) BOOL currentlyShiftingCards;
 @property (strong, nonatomic) NSMutableArray *siftViewData;
 @property (strong, nonatomic) NSMutableArray *siftViewCards;
 
@@ -55,6 +58,7 @@ UIGestureRecognizerDelegate
 @property (strong, nonatomic) UIButton *rightActionButton;
 @property (strong, nonatomic) UIButton *cancelButton;
 @property (strong, nonatomic) SiftCardView *lastSiftCard;
+@property (strong, nonatomic) SiftCardView *currentSiftCard;
 @property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
 
 -(id)initWithFrame:(CGRect)frame data:(NSArray*)data;

@@ -23,6 +23,8 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     _viewHeight = frame.size.height;
     _cardWidth = 300;
     _cardHeight = _cardWidth;
+    _currentlyShiftingCards = NO;
+    _swipeActionThreshold = 120;
     
     _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCard:)];
     _panGesture.delegate = self;
@@ -43,36 +45,44 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
 -(void)swipeCard:(UIPanGestureRecognizer*)recognizer{
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:{
-            _cardCenter = _lastSiftCard.center;
-            _originalCardCenter = _lastSiftCard.center;
+            _cardCenter = _currentSiftCard.center;
+            _originalCardCenter = _currentSiftCard.center;
             break;
         }
         case UIGestureRecognizerStateChanged:{
-            CGPoint touchChange = [recognizer translationInView:_lastSiftCard];
+            CGPoint touchChange = [recognizer translationInView:_currentSiftCard];
             CGFloat cardCenterY = _cardCenter.y + touchChange.y;
             CGFloat cardCenterX = _cardCenter.x + touchChange.x;
-            _lastSiftCard.center = CGPointMake(cardCenterX, cardCenterY);
             int offset = (cardCenterX > _viewWidth/2) ? cardCenterX - _viewWidth/2 : -1 * (_viewWidth/2 - cardCenterX);
-            _lastSiftCard.transform = CGAffineTransformMakeRotation(offset/(_viewWidth*2));
-            NSLog(@"Offset: %i", offset);
-            if(offset == 20){
+            _currentSiftCard.center = CGPointMake(cardCenterX, cardCenterY);
+            _currentSiftCard.transform = CGAffineTransformMakeRotation(offset/(_viewWidth*2));
+            if(fabs(offset) > _swipeActionThreshold/2){
                 if(cardCenterX > _viewWidth/2){
                     [self shiftCards:SwipeDirectionRight];
                 } else{
                     [self shiftCards:SwipeDirectionLeft];
                 }
             }
+            else{
+                [self shiftCards:SwipeDirectionCenter];
+            }
             
             break;
         }
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateEnded:{
-            [UIView animateWithDuration:1.f delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                _lastSiftCard.center = _originalCardCenter;
-                _lastSiftCard.transform = CGAffineTransformMakeRotation(0);
-            } completion:^(BOOL finished) {
-                //
-            }];
+            CGPoint touchChange = [recognizer translationInView:_currentSiftCard];
+            CGFloat cardCenterX = _cardCenter.x + touchChange.x;
+            int offset = (cardCenterX > _viewWidth/2) ? cardCenterX - _viewWidth/2 : -1 * (_viewWidth/2 - cardCenterX);
+            SwipeDirection cardDirection;
+            if(fabs(offset) > _swipeActionThreshold){
+                cardDirection = (cardCenterX > _viewWidth/2) ? SwipeDirectionRight : SwipeDirectionLeft;
+            }
+            else{
+                cardDirection = SwipeDirectionCenter;
+            }
+            [self shiftCards:SwipeDirectionCenter];
+            [self animate:_currentSiftCard inDirection:cardDirection];
         }
         default:
             break;
@@ -87,17 +97,23 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
 -(void)swipedLeft{
     _siftViewState = SiftViewStateCompletedSiftLeft;
     [_delegate didSwipeLeft];
+    [self reloadData];
 }
 
 -(void)animate:(SiftCardView*)card inDirection:(SwipeDirection)direction{
     CGRect cardFrame = card.frame;
+    CGPoint  cardCenter;
     switch(direction){
         case SwipeDirectionLeft:{
-            cardFrame.origin.x = -(_viewWidth + cardFrame.size.width);
+            cardCenter = CGPointMake(-(_viewWidth + cardFrame.size.width), _originalCardCenter.y);
             break;
         }
         case SwipeDirectionRight:{
-            cardFrame.origin.x = _viewWidth;
+            cardCenter = CGPointMake(_viewWidth + cardFrame.size.width, _originalCardCenter.y);
+            break;
+        }
+        case SwipeDirectionCenter:{
+            cardCenter = _originalCardCenter;
             break;
         }
         default:
@@ -107,9 +123,11 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     //Shuffle cards forward
     
     [UIView animateWithDuration:0.34 animations:^{
-        card.frame = cardFrame;
+        card.center = cardCenter;
+        card.transform = CGAffineTransformMakeRotation(0);
     } completion:^(BOOL finished) {
         _lastSiftCard = card;
+//        _currentSiftCard = [_siftViewCards objectAtIndex:[_siftViewCards indexOfObject:card]-1];
         
         switch (direction) {
             case SwipeDirectionLeft:{
@@ -134,21 +152,35 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
 -(void)swipedRight{
     _siftViewState = SiftViewStateCompletedSiftRight;
     [_delegate didSwipeRight];
+    [self reloadData];
 }
 
 -(void)shiftCards:(SwipeDirection)direction{
-    for(SiftCardView *card in self.subviews){
-        if([_siftViewCards indexOfObject:card] > 0){
+    if(_currentlyShiftingCards == YES) return;
+    _currentlyShiftingCards = YES;
+    
+    NSArray *cards = [[self.subviews reverseObjectEnumerator] allObjects];
+    for(SiftCardView *card in cards){
+        if([_siftViewCards indexOfObject:card] > 0 && [_siftViewCards indexOfObject:card] < 3){
             CGPoint cardCenter = card.center;
-            cardCenter.x += (direction == SwipeDirectionRight) ?  40 - card.tag*10 : -40 + card.tag*10;
-            [UIView animateWithDuration:0.3 delay:1 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            
+            if(direction == SwipeDirectionCenter){
+                cardCenter.x = _originalCardCenter.x;
+            }
+            else{
+                cardCenter.x = (direction == SwipeDirectionRight) ?
+                _originalCardCenter.x + (3-[_siftViewCards indexOfObject:card])*10 :
+                _originalCardCenter.x - (3-[_siftViewCards indexOfObject:card])*10;
+                NSLog(@"Card Index: %i", (int)[_siftViewCards indexOfObject:card]);
+            }
+            
+            [UIView animateWithDuration:0.2 delay:0.1 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 card.center = cardCenter;
             } completion:^(BOOL finished) {
-                //
+                if([_siftViewCards indexOfObject:card] == 2){
+                    _currentlyShiftingCards = NO;
+                }
             }];
-        }
-        else{
-            NSLog(@"Card Index: %i", [_siftViewCards indexOfObject:card]);
         }
     }
 }
@@ -199,7 +231,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
         switch (card.tag) {
             case 0:{
                 NSLog(@"Last");
-                _lastSiftCard = card;
+                _currentSiftCard = card;
                 break;
             }
             case 1:{
