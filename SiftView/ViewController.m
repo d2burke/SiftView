@@ -16,7 +16,26 @@
             
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    _cardData = [NSMutableArray arrayWithObjects:
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Lebron as a rookie", @"title",
+                  @"A star on the rise", @"subtitle",
+                  @"lebron-rookie.png", @"imageName", nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Lebron in Miami", @"title",
+                  @"Finally a champion", @"subtitle",
+                  @"lebron-miami.jpg", @"imageName", nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Lebron back in Cleveland", @"title",
+                  @"The king returns", @"subtitle",
+                  @"lebron-cavs.jpg", @"imageName",  nil],
+                 nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    _siftView = [[SiftView alloc] initWithFrame:self.view.bounds data:_cardData];
+    [self.view addSubview:_siftView];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -11,17 +11,83 @@
 
 NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotification";
 
-@implementation SiftView
+@implementation SiftView{
+    
+}
 
 -(id)initWithFrame:(CGRect)frame data:(NSArray*)data{
     self = [super initWithFrame:frame];
+    _siftViewData = [[[data reverseObjectEnumerator] allObjects] mutableCopy];
+    _viewWidth = frame.size.width;
+    _viewHeight = frame.size.height;
+    _cardWidth = 300;
+    _cardHeight = _cardWidth;
+    
+    _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCard:)];
+    _panGesture.delegate = self;
+    [self addGestureRecognizer:_panGesture];
+    
+    for(NSDictionary *cardData in _siftViewData){
+        SiftCardView *card = [[SiftCardView alloc] initWithFrame:CGRectMake(_viewWidth/2 - _cardWidth/2, 84, _cardWidth, _cardHeight)];
+        card.tag = [_siftViewData count] - ([data indexOfObject:cardData] + 1);
+        card.titleLabel.text = [cardData objectForKey:@"title"];
+        card.subtitleLabel.text = [cardData objectForKey:@"subtitle"];
+        card.imageView.image = [UIImage imageNamed:[cardData objectForKey:@"imageName"]];
+        [self addSubview:card];
+        
+        CGRect shiftFrame = card.frame;
+        switch (card.tag) {
+            case 0:{
+                NSLog(@"Last, %@", card.titleLabel.text);
+                break;
+            }
+            case 1:{
+                NSLog(@"Second to last");
+                card.transform = CGAffineTransformMakeScale(0.9, 0.9);
+                shiftFrame.origin.y += 5;
+                card.frame = shiftFrame;
+                card.alpha = 0.8;
+                break;
+            }
+            case 2:{
+                NSLog(@"Third to last");
+                card.transform = CGAffineTransformMakeScale(0.8, 0.8);
+                shiftFrame.origin.y += 10;
+                card.frame = shiftFrame;
+                card.alpha = 0.8;
+                break;
+            }
+            default:{
+                NSLog(@"Card Index: %i", card.tag);
+                break;
+            }
+        }
+    }
+    
     return self;
 }
 -(id)initWithFrame:(CGRect)frame cards:(NSArray*)cards{
     self = [super initWithFrame:frame];
+    for(SiftCardView *card in cards){
+        card.tag = [cards indexOfObject:card];
+        [self addSubview:card];
+    }
     return self;
 }
 
+-(void)swipeCard:(UIPanGestureRecognizer*)recognizer{
+    
+    switch (recognizer.state) {
+        case UIGestureRecognizerStateBegan:{
+            break;
+        }
+        case UIGestureRecognizerStateChanged:{
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 -(void)swipeLeft:(SiftCardView*)card{
     _siftViewState = SiftViewStateBeganSiftLeft;
@@ -109,8 +175,22 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
 
 -(void)reloadData{
     //Remove old cards
+    for(SiftCardView *card in self.subviews){
+        [card removeFromSuperview];
+    }
+    
     //Loop over sift cards and add them in order
+    for(NSDictionary *cardData in _siftViewData){
+        SiftCardView *card = [[SiftCardView alloc] initWithFrame:CGRectMake(_viewWidth/2 - _cardWidth/2, 84, _cardWidth, _cardHeight)];
+        card.tag = [_siftViewData indexOfObject:cardData];
+        card.titleLabel.text = [cardData objectForKey:@"title"];
+        card.subtitleLabel.text = [cardData objectForKey:@"subtitle"];
+        card.imageView.image = [UIImage imageNamed:[cardData objectForKey:@"imageName"]];
+        [self addSubview:card];
+        NSLog(@"Added card: %@", cardData);
+    }
     //Animate them into place
+    
 }
 
 @end

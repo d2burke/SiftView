@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SiftView.h"
 
 @interface ViewController : UIViewController
 
+@property (strong, nonatomic) NSMutableArray *cardData;
+
+@property (strong, nonatomic) IBOutlet SiftView *siftView;
 
 @end
 

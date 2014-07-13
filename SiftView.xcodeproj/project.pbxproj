@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5550CEB1971F47200AD2698 /* lebron-cavs.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C5550CE81971F47200AD2698 /* lebron-cavs.jpg */; };
+		C5550CEC1971F47200AD2698 /* lebron-miami.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C5550CE91971F47200AD2698 /* lebron-miami.jpg */; };
+		C5550CED1971F47200AD2698 /* lebron-rookie.png in Resources */ = {isa = PBXBuildFile; fileRef = C5550CEA1971F47200AD2698 /* lebron-rookie.png */; };
 		C5CE91C0196E189000159784 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CE91BF196E189000159784 /* main.m */; };
 		C5CE91C3196E189000159784 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CE91C2196E189000159784 /* AppDelegate.m */; };
 		C5CE91C6196E189000159784 /* SiftView.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C5CE91C4196E189000159784 /* SiftView.xcdatamodeld */; };
@@ -29,6 +32,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C5550CE41971EE6600AD2698 /* SiftViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiftViewDelegate.h; path = SiftView/SiftViewDelegate.h; sourceTree = "<group>"; };
+		C5550CE81971F47200AD2698 /* lebron-cavs.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lebron-cavs.jpg"; sourceTree = "<group>"; };
+		C5550CE91971F47200AD2698 /* lebron-miami.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lebron-miami.jpg"; sourceTree = "<group>"; };
+		C5550CEA1971F47200AD2698 /* lebron-rookie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lebron-rookie.png"; sourceTree = "<group>"; };
 		C5CE91BA196E189000159784 /* SiftView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SiftView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CE91BE196E189000159784 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5CE91BF196E189000159784 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -66,6 +73,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C5550CE71971F47200AD2698 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				C5550CE81971F47200AD2698 /* lebron-cavs.jpg */,
+				C5550CE91971F47200AD2698 /* lebron-miami.jpg */,
+				C5550CEA1971F47200AD2698 /* lebron-rookie.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		C5CE91B1196E189000159784 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +108,7 @@
 				C5CE91C2196E189000159784 /* AppDelegate.m */,
 				C5CE91C7196E189000159784 /* ViewController.h */,
 				C5CE91C8196E189000159784 /* ViewController.m */,
+				C5550CE71971F47200AD2698 /* Images */,
 				C5CE91E3196E18A300159784 /* SiftView */,
 				C5CE91CA196E189000159784 /* Main.storyboard */,
 				C5CE91CD196E189000159784 /* Images.xcassets */,
@@ -133,6 +151,7 @@
 				C5CE91E5196E18F300159784 /* SiftView.m */,
 				C5CE91E7196E1D2700159784 /* SiftCardView.h */,
 				C5CE91E8196E1D2700159784 /* SiftCardView.m */,
+				C5550CE41971EE6600AD2698 /* SiftViewDelegate.h */,
 			);
 			name = SiftView;
 			sourceTree = "<group>";
@@ -218,7 +237,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5CE91CC196E189000159784 /* Main.storyboard in Resources */,
+				C5550CEB1971F47200AD2698 /* lebron-cavs.jpg in Resources */,
+				C5550CED1971F47200AD2698 /* lebron-rookie.png in Resources */,
 				C5CE91CE196E189000159784 /* Images.xcassets in Resources */,
+				C5550CEC1971F47200AD2698 /* lebron-miami.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +448,7 @@
 				C5CE91DF196E189000159784 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C5CE91E0196E189000159784 /* Build configuration list for PBXNativeTarget "SiftViewTests" */ = {
 			isa = XCConfigurationList;
@@ -434,6 +457,7 @@
 				C5CE91E2196E189000159784 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
