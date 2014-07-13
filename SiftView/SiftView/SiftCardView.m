@@ -16,8 +16,10 @@
     _viewHeight = frame.size.height;
     if(self){
         self.backgroundColor = [UIColor whiteColor];
+        self.layer.cornerRadius = 6.f;
         self.layer.borderColor = [UIColor lightGrayColor].CGColor;
         self.layer.borderWidth = 1.f;
+        
         _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, _viewWidth-20, _viewWidth*0.66)];
         _imageView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:_imageView];

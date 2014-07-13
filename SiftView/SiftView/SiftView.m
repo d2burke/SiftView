@@ -33,14 +33,14 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     _swipeActionThreshold = 120;
     
     _rightActionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _rightActionButton.frame = CGRectMake(_viewWidth, _viewHeight/2 - 30, 80, 60);
+    _rightActionButton.frame = CGRectMake(_viewWidth, _viewHeight/4, 80, 60);
     _rightActionButton.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.95];
     _rightActionButton.layer.cornerRadius = 5.f;
     _rightActionButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 22);
     [self addSubview:_rightActionButton];
     
     _leftActionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _leftActionButton.frame = CGRectMake(-80, _viewHeight/2 - 30, 80, 60);
+    _leftActionButton.frame = CGRectMake(-80, _viewHeight/4, 80, 60);
     _leftActionButton.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.95];
     _leftActionButton.layer.cornerRadius = 5.f;
     _leftActionButton.contentEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 0);
@@ -95,6 +95,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
         }
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateEnded:{
+            self.userInteractionEnabled = NO;
             CGPoint touchChange = [recognizer translationInView:_currentSiftCard];
             CGFloat cardCenterX = _cardCenter.x + touchChange.x;
             int offset = (cardCenterX > _viewWidth/2) ? cardCenterX - _viewWidth/2 : -1 * (_viewWidth/2 - cardCenterX);
@@ -166,6 +167,8 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
             default:
             break;
         }
+        
+        self.userInteractionEnabled = YES;
     }];
 }
 
@@ -218,7 +221,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     if(_currentlyShiftingCards == YES) return;
     _currentlyShiftingCards = YES;
     
-    NSArray *cards = [[self.subviews reverseObjectEnumerator] allObjects];
+    NSArray *cards = [[_cardContainer.subviews reverseObjectEnumerator] allObjects];
     for(SiftCardView *card in cards){
         if([_siftViewCards indexOfObject:card] > 0 && [_siftViewCards indexOfObject:card] < _cardDisplayCount){
             CGPoint cardCenter = card.center;
@@ -270,7 +273,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
 
 -(void)reloadData{
     //Remove old cards
-    for(UIView *view in self.subviews){
+    for(UIView *view in _cardContainer.subviews){
         if([view isKindOfClass:[SiftCardView class]]){
             [view removeFromSuperview];
         }
