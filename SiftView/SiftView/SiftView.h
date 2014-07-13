@@ -53,6 +53,7 @@ UIGestureRecognizerDelegate
 @property (strong, nonatomic) NSMutableArray *siftViewData;
 @property (strong, nonatomic) NSMutableArray *siftViewCards;
 
+@property (strong, nonatomic) UIView *cardContainer;
 @property (strong, nonatomic) UIImage *placeholder;
 @property (strong, nonatomic) UIButton *leftActionButton;
 @property (strong, nonatomic) UIButton *rightActionButton;

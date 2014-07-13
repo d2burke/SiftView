@@ -17,6 +17,11 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
 
 -(id)initWithFrame:(CGRect)frame data:(NSArray*)data{
     self = [super initWithFrame:frame];
+    self.backgroundColor = [UIColor clearColor];
+    
+    _cardContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+    [self addSubview:_cardContainer];
+    
     _siftViewCards = [[NSMutableArray alloc] init];
     _siftViewData = [[[data reverseObjectEnumerator] allObjects] mutableCopy];
     _viewWidth = frame.size.width;
@@ -26,6 +31,18 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     _currentlyShiftingCards = NO;
     _cardDisplayCount = 3;
     _swipeActionThreshold = 120;
+    
+    _rightActionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _rightActionButton.frame = CGRectMake(_viewWidth, _viewHeight/2 - 30, 80, 60);
+    _rightActionButton.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.95];
+    _rightActionButton.layer.cornerRadius = 5.f;
+    [self addSubview:_rightActionButton];
+    
+    _leftActionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _leftActionButton.frame = CGRectMake(-80, _viewHeight/2 - 30, 80, 60);
+    _leftActionButton.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.95];
+    _leftActionButton.layer.cornerRadius = 5.f;
+    [self addSubview:_leftActionButton];
     
     _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCard:)];
     _panGesture.delegate = self;
@@ -57,14 +74,18 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
             int offset = (cardCenterX > _viewWidth/2) ? cardCenterX - _viewWidth/2 : -1 * (_viewWidth/2 - cardCenterX);
             _currentSiftCard.center = CGPointMake(cardCenterX, cardCenterY);
             _currentSiftCard.transform = CGAffineTransformMakeRotation(offset/(_viewWidth*2));
+            
             if(fabs(offset) > _swipeActionThreshold/2){
                 if(cardCenterX > _viewWidth/2){
+                    [self showActionButton:SwipeDirectionRight];
                     [self shiftCards:SwipeDirectionRight];
                 } else{
                     [self shiftCards:SwipeDirectionLeft];
+                    [self showActionButton:SwipeDirectionLeft];
                 }
             }
             else{
+                [self hideActionButtons];
                 [self shiftCards:SwipeDirectionCenter];
             }
             
@@ -156,6 +177,40 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     [self reloadData];
 }
 
+-(void)showActionButton:(SwipeDirection)direction{
+    CGRect  rightButtonFrame = _rightActionButton.frame,
+            leftButtonFrame = _leftActionButton.frame;
+    
+    if(direction == SwipeDirectionRight){
+            rightButtonFrame.origin.x = _viewWidth;
+            leftButtonFrame.origin.x = -20;
+    }
+    else{
+        rightButtonFrame.origin.x = _viewWidth - 60;
+        leftButtonFrame.origin.x = -80;
+    }
+    
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        _rightActionButton.frame = rightButtonFrame;
+        _leftActionButton.frame = leftButtonFrame;
+    } completion:^(BOOL finished) {
+        //
+    }];
+}
+
+-(void)hideActionButtons{
+    CGRect  rightButtonFrame = _rightActionButton.frame,
+            leftButtonFrame = _leftActionButton.frame;
+    rightButtonFrame.origin.x = _viewWidth;
+    leftButtonFrame.origin.x = -80;
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        _rightActionButton.frame = rightButtonFrame;
+        _leftActionButton.frame = leftButtonFrame;
+    } completion:^(BOOL finished) {
+        //
+    }];
+}
+
 -(void)shiftCards:(SwipeDirection)direction{
     if(_currentlyShiftingCards == YES) return;
     _currentlyShiftingCards = YES;
@@ -172,7 +227,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
                 _originalCardCenter.x + (_cardDisplayCount-[_siftViewCards indexOfObject:card])*10 :
                 _originalCardCenter.x - (_cardDisplayCount-[_siftViewCards indexOfObject:card])*10;
             }
-            [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
                 card.center = cardCenter;
             } completion:^(BOOL finished) {
                 if([_siftViewCards indexOfObject:card] == 2){
@@ -212,8 +267,10 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
 
 -(void)reloadData{
     //Remove old cards
-    for(SiftCardView *card in self.subviews){
-        [card removeFromSuperview];
+    for(UIView *view in self.subviews){
+        if([view isKindOfClass:[SiftCardView class]]){
+            [view removeFromSuperview];
+        }
     }
     
     for(NSDictionary *cardData in _siftViewData){
@@ -222,7 +279,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
         card.titleLabel.text = [cardData objectForKey:@"title"];
         card.subtitleLabel.text = [cardData objectForKey:@"subtitle"];
         card.imageView.image = [UIImage imageNamed:[cardData objectForKey:@"imageName"]];
-        [self addSubview:card];
+        [_cardContainer addSubview:card];
         [_siftViewCards insertObject:card atIndex:0];
         
         CGRect shiftFrame = card.frame;
