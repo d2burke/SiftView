@@ -30,6 +30,22 @@
                   @"Lebron back in Cleveland", @"title",
                   @"The king returns", @"subtitle",
                   @"lebron-cavs.jpg", @"imageName",  nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Lebron back in Cleveland", @"title",
+                  @"The king returns", @"subtitle",
+                  @"4 lebron-cavs.jpg", @"imageName",  nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Lebron back in Cleveland", @"title",
+                  @"The king returns", @"subtitle",
+                  @"5 lebron-cavs.jpg", @"imageName",  nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Lebron back in Cleveland", @"title",
+                  @"The king returns", @"subtitle",
+                  @"6 lebron-cavs.jpg", @"imageName",  nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Lebron back in Cleveland", @"title",
+                  @"The king returns", @"subtitle",
+                  @"7 lebron-cavs.jpg", @"imageName",  nil],
                  nil];
 }
 

@@ -44,6 +44,8 @@ UIGestureRecognizerDelegate
 @property (nonatomic) CGFloat viewHeight;
 @property (nonatomic) CGFloat cardWidth;
 @property (nonatomic) CGFloat cardHeight;
+@property (nonatomic) CGPoint cardCenter;
+@property (nonatomic) CGPoint originalCardCenter;
 @property (nonatomic) int cardDisplayCount;
 @property (strong, nonatomic) NSMutableArray *siftViewData;
 @property (strong, nonatomic) NSMutableArray *siftViewCards;
