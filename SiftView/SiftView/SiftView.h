@@ -51,7 +51,9 @@ UIGestureRecognizerDelegate
 @property (nonatomic) int cardDisplayCount;
 @property (nonatomic) BOOL currentlyShiftingCards;
 @property (strong, nonatomic) NSMutableArray *siftViewData;
+@property (strong, nonatomic) NSMutableArray *firstThreeData;
 @property (strong, nonatomic) NSMutableArray *siftViewCards;
+@property (strong, nonatomic) NSMutableArray *firstThreeCards;
 
 @property (strong, nonatomic) UIView *cardContainer;
 @property (strong, nonatomic) UIImage *placeholder;
@@ -64,8 +66,7 @@ UIGestureRecognizerDelegate
 
 -(id)initWithFrame:(CGRect)frame data:(NSArray*)data;
 -(id)initWithFrame:(CGRect)frame cards:(NSArray*)cards;
--(void)swipeLeft:(SiftCardView*)card;
--(void)swipeRight:(SiftCardView*)card;
+-(void)swipe:(SiftCardView*)card inDirection:(SwipeDirection)direction;
 -(void)undoLastSift;
 -(void)reloadData;
 
