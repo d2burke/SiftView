@@ -12,11 +12,13 @@
 
 @property (nonatomic) CGFloat viewWidth;
 @property (nonatomic) CGFloat viewHeight;
+@property (nonatomic) CGFloat imageURL;
+@property (copy, nonatomic) NSDictionary *cardInfo;
 
+@property (copy, nonatomic) UILabel *titleLabel;
+@property (copy, nonatomic) UILabel *subtitleLabel;
 @property (copy, nonatomic) UIImageView *imageView;
 @property (copy, nonatomic) UIImageView *leftActionImageView;
 @property (copy, nonatomic) UIImageView *rightActionImageView;
-@property (copy, nonatomic) UILabel *titleLabel;
-@property (copy, nonatomic) UILabel *subtitleLabel;
 
 @end

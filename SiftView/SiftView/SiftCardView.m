@@ -16,15 +16,15 @@
     _viewHeight = frame.size.height;
     if(self){
         self.backgroundColor = [UIColor whiteColor];
-        self.layer.cornerRadius = 6.f;
+        self.layer.cornerRadius = 3.f;
         self.layer.borderColor = [UIColor lightGrayColor].CGColor;
         self.layer.borderWidth = 1.f;
         
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, _viewWidth-20, _viewWidth*0.66)];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _viewWidth, _viewWidth*0.75)];
         _imageView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:_imageView];
         
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, _viewWidth*0.66, _viewWidth-20, 40)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, _viewWidth*0.75, _viewWidth-20, 40)];
         _titleLabel.font = [UIFont boldSystemFontOfSize:18.f];
         _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.text = @"Card Title";

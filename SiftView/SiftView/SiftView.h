@@ -12,26 +12,6 @@
 
 extern NSString * const SiftViewStateChangeNotification;
 
-typedef enum{
-    SiftViewStateBeganSiftLeft,
-    SiftViewStateBeganSiftRight,
-    SiftViewStateCompletedSiftLeft,
-    SiftViewStateCompletedSiftRight,
-    SiftViewStateCancelled
-} SiftViewState;
-
-typedef enum{
-    SwipeDirectionLeft,
-    SwipeDirectionRight,
-    SwipeDirectionCenter
-} SwipeDirection;
-
-typedef enum{
-    SiftCardScaleSecond = 1,
-    SiftCardScaleThird = 2,
-    SiftCardScaleFourth = 3
-} SiftCardScale;
-
 @interface SiftView : UIView
 
 <
@@ -41,6 +21,7 @@ UIGestureRecognizerDelegate
 @property (strong, nonatomic) id <SiftViewDelegate> delegate;
 @property (nonatomic) SwipeDirection swipeDirection;
 @property (nonatomic) SiftViewState siftViewState;
+@property (nonatomic) CGRect siftViewFrame;
 @property (nonatomic) CGFloat viewWidth;
 @property (nonatomic) CGFloat viewHeight;
 @property (nonatomic) CGFloat cardWidth;
@@ -50,10 +31,12 @@ UIGestureRecognizerDelegate
 @property (nonatomic) CGFloat swipeActionThreshold;
 @property (nonatomic) int cardDisplayCount;
 @property (nonatomic) BOOL currentlyShiftingCards;
+@property (nonatomic) BOOL allowsVerticalPanning;
+@property (nonatomic) BOOL shiftSecondaryCards;
 @property (strong, nonatomic) NSMutableArray *siftViewData;
-@property (strong, nonatomic) NSMutableArray *firstThreeData;
+@property (strong, nonatomic) NSMutableArray *displaySetData;
 @property (strong, nonatomic) NSMutableArray *siftViewCards;
-@property (strong, nonatomic) NSMutableArray *firstThreeCards;
+@property (strong, nonatomic) NSMutableArray *displaySetCards;
 
 @property (strong, nonatomic) UIView *cardContainer;
 @property (strong, nonatomic) UIImage *placeholder;
@@ -66,8 +49,10 @@ UIGestureRecognizerDelegate
 
 -(id)initWithFrame:(CGRect)frame data:(NSArray*)data;
 -(id)initWithFrame:(CGRect)frame cards:(NSArray*)cards;
--(void)swipe:(SiftCardView*)card inDirection:(SwipeDirection)direction;
--(void)undoLastSift;
--(void)reloadData;
+- (void)swipe:(SiftCardView*)card inDirection:(SwipeDirection)direction;
+- (void)undoLastSift;
+- (void)reloadData;
+- (void)setCards:(SiftCardsVisibility)visibility;
+
 
 @end
