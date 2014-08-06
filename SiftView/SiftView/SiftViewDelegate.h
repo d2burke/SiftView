@@ -41,9 +41,10 @@ typedef enum{
 
 - (SiftCardView *)siftView:(SiftView*)siftView cardAtIndex:(int)cardIndex;
 
-
 - (void)didSwipeCard:(SiftCardView*)card inDirection:(SwipeDirection)direction;
+- (void)didUpdateNumberOfCards:(int)cards;
 - (void)didSiftAllCards;
 - (void)siftView:(SiftView*)siftView didSwipe:(CGFloat)offset;
+- (void)siftView:(SiftView*)siftView didSelectCard:(SiftCardView*)card;
 
 @end

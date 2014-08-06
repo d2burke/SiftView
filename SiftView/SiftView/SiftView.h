@@ -52,7 +52,5 @@ UIGestureRecognizerDelegate
 - (void)swipe:(SiftCardView*)card inDirection:(SwipeDirection)direction;
 - (void)undoLastSift;
 - (void)reloadData;
-- (void)setCards:(SiftCardsVisibility)visibility;
-
 
 @end

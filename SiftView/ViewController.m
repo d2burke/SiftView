@@ -33,28 +33,31 @@
                  [NSDictionary dictionaryWithObjectsAndKeys:
                   @"Lebron back in Cleveland", @"title",
                   @"The king returns", @"subtitle",
-                  @"4 lebron-cavs.jpg", @"imageName",  nil],
+                  @"lebron-cavs.jpg", @"imageName",  nil],
                  [NSDictionary dictionaryWithObjectsAndKeys:
                   @"Lebron back in Cleveland", @"title",
                   @"The king returns", @"subtitle",
-                  @"5 lebron-cavs.jpg", @"imageName",  nil],
+                  @"lebron-cavs.jpg", @"imageName",  nil],
                  [NSDictionary dictionaryWithObjectsAndKeys:
                   @"Lebron back in Cleveland", @"title",
                   @"The king returns", @"subtitle",
-                  @"6 lebron-cavs.jpg", @"imageName",  nil],
+                  @"lebron-cavs.jpg", @"imageName",  nil],
                  [NSDictionary dictionaryWithObjectsAndKeys:
                   @"Lebron back in Cleveland", @"title",
                   @"The king returns", @"subtitle",
-                  @"7 lebron-cavs.jpg", @"imageName",  nil],
+                  @"lebron-cavs.jpg", @"imageName",  nil],
                  nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    _siftView = [[SiftView alloc] initWithFrame:self.view.bounds data:_cardData];
+    CGRect siftViewFrame = self.view.bounds;
+    siftViewFrame.origin.y = 84;
+    _siftView = [[SiftView alloc] initWithFrame:siftViewFrame data:_cardData];
     [_siftView.rightActionButton setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
     [_siftView.leftActionButton setImage:[UIImage imageNamed:@"remove"] forState:UIControlStateNormal];
     [self.view addSubview:_siftView];
+    [_siftView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

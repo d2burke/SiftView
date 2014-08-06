@@ -7,18 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GradientView.h"
 
 @interface SiftCardView : UIView
 
 @property (nonatomic) CGFloat viewWidth;
 @property (nonatomic) CGFloat viewHeight;
 @property (nonatomic) CGFloat imageURL;
-@property (copy, nonatomic) NSDictionary *cardInfo;
+@property (copy, nonatomic) NSMutableDictionary *cardInfo;
 
 @property (copy, nonatomic) UILabel *titleLabel;
 @property (copy, nonatomic) UILabel *subtitleLabel;
+@property (copy, nonatomic) UIButton *leftButton;
+@property (copy, nonatomic) UIButton *rightButton;
+@property (copy, nonatomic) GradientView *gradientView;
 @property (copy, nonatomic) UIImageView *imageView;
 @property (copy, nonatomic) UIImageView *leftActionImageView;
 @property (copy, nonatomic) UIImageView *rightActionImageView;
+@property (copy, nonatomic) UITapGestureRecognizer *tapGesture;
 
 @end
