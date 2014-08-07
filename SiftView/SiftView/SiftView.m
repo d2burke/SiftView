@@ -234,6 +234,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
 }
 
 -(void)shuffleCardsForward{
+    _lastSiftCard = _currentSiftCard;
     [_currentSiftCard removeFromSuperview];
     [_siftViewData removeObjectAtIndex:0];
     [_siftViewCards removeObjectAtIndex:0];
@@ -281,7 +282,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
 -(void)undoLastSift{
     //animate _lastSiftCard back into view
     //add the object to the array
-    NSLog(@"Undo Last Sift");
+    NSLog(@"Undo Last Sift: %@", _lastSiftCard);
 }
 
 -(void)reachedEndOfData{
@@ -310,6 +311,7 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
         card.cardInfo = [cardData objectForKey:@"cardInfo"];
         card.titleLabel.text = [cardData objectForKey:@"title"];
         card.subtitleLabel.text = [cardData objectForKey:@"subtitle"];
+        card.detailLabel.text = [cardData objectForKey:@"detail"];
         card.imageView.image = [UIImage imageNamed:[cardData objectForKey:@"imageName"]];
         [card.leftButton addTarget:self action:@selector(swipeLeft) forControlEvents:UIControlEventTouchUpInside];
         [card.rightButton addTarget:self action:@selector(swipeRight) forControlEvents:UIControlEventTouchUpInside];

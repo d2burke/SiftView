@@ -18,6 +18,7 @@
 
 @property (copy, nonatomic) UILabel *titleLabel;
 @property (copy, nonatomic) UILabel *subtitleLabel;
+@property (copy, nonatomic) UILabel *detailLabel;
 @property (copy, nonatomic) UIButton *leftButton;
 @property (copy, nonatomic) UIButton *rightButton;
 @property (copy, nonatomic) GradientView *gradientView;
