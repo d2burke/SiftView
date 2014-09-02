@@ -225,22 +225,22 @@
         [self insertSubview:_player.view belowSubview:_videoPlayButton];
         
         [_videoLoader startRotation];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(MPMoviePlayerLoadStateDidChange:)
-                                                     name:MPMoviePlayerLoadStateDidChangeNotification
-                                                   object:nil];
-        
-        
-        [[NSNotificationCenter defaultCenter]   addObserver:self
-                                                   selector:@selector(MPMoviePlayerPlaybackStateDidChange:)
-                                                       name:MPMoviePlayerPlaybackStateDidChangeNotification
-                                                     object:nil];
-        
-        [[NSNotificationCenter defaultCenter]   addObserver:self
-                                                   selector:@selector(MPMoviePlayerPlaybackDidFinish:)
-                                                       name:MPMoviePlayerPlaybackDidFinishNotification
-                                                     object:nil];
+//        
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(MPMoviePlayerLoadStateDidChange:)
+//                                                     name:MPMoviePlayerLoadStateDidChangeNotification
+//                                                   object:nil];
+//        
+//        
+//        [[NSNotificationCenter defaultCenter]   addObserver:self
+//                                                   selector:@selector(MPMoviePlayerPlaybackStateDidChange:)
+//                                                       name:MPMoviePlayerPlaybackStateDidChangeNotification
+//                                                     object:nil];
+//        
+//        [[NSNotificationCenter defaultCenter]   addObserver:self
+//                                                   selector:@selector(MPMoviePlayerPlaybackDidFinish:)
+//                                                       name:MPMoviePlayerPlaybackDidFinishNotification
+//                                                     object:nil];
         
         //MPMoviePlayerPlaybackDidFinishNotification
     }
@@ -286,7 +286,7 @@
     }
 }
 
--(void)MPMoviePlayerPlaybackStateDidChange:(NSNotification*)notification{
+-(void)MPMoviePlayerPlaybackStateDidChange:(id)sender{
     switch (_player.playbackState) {
         case MPMoviePlaybackStateStopped :
             NSLog(@"Stopped");
