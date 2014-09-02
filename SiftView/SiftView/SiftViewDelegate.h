@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SiftCardView.h"
 
 typedef enum{
     SiftViewStateBeganSiftLeft,
@@ -28,9 +29,11 @@ typedef enum{
     SiftCardScaleFourth = 3
 } SiftCardScale;
 
+//The visibility attribute is a positive Boolean,
+//so .hidden should be set to YES (true)
 typedef enum{
-    SiftCardsHidden,
-    SiftCardsVisible
+    SiftCardsHidden = YES,
+    SiftCardsVisible = NO
 } SiftCardsVisibility;
 
 @class SiftView;
@@ -46,5 +49,6 @@ typedef enum{
 - (void)didSiftAllCards;
 - (void)siftView:(SiftView*)siftView didSwipe:(CGFloat)offset;
 - (void)siftView:(SiftView*)siftView didSelectCard:(SiftCardView*)card;
+- (void)siftView:(SiftView*)siftView didUndoSiftForCard:(SiftCardView*)card;
 
 @end

@@ -33,6 +33,7 @@ UIGestureRecognizerDelegate
 @property (nonatomic) BOOL currentlyShiftingCards;
 @property (nonatomic) BOOL allowsVerticalPanning;
 @property (nonatomic) BOOL shiftSecondaryCards;
+@property (nonatomic) BOOL cardsAreHidden;
 @property (strong, nonatomic) NSMutableArray *siftViewData;
 @property (strong, nonatomic) NSMutableArray *displaySetData;
 @property (strong, nonatomic) NSMutableArray *siftViewCards;
@@ -50,6 +51,7 @@ UIGestureRecognizerDelegate
 -(id)initWithFrame:(CGRect)frame data:(NSArray*)data;
 -(id)initWithFrame:(CGRect)frame cards:(NSArray*)cards;
 - (void)swipe:(SiftCardView*)card inDirection:(SwipeDirection)direction;
+- (void)setSiftCards:(SiftCardsVisibility)visibility;
 - (void)undoLastSift;
 - (void)reloadData;
 
