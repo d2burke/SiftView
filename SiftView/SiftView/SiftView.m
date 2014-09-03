@@ -319,6 +319,13 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
                                                       userInfo:nil];
 }
 
+/*!
+ @description Animate Show/Hide views in on either side of
+ the view based on Card pan and depending
+ on the direction the card is panned
+ 
+ @param direction
+ */
 -(void)reloadData{
     
     //Remove old cards
@@ -388,6 +395,13 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     [_delegate didUpdateNumberOfCards:[_siftViewData count]];
 }
 
+/*!
+ @description Animate Show/Hide views in on either side of
+                the view based on Card pan and depending
+                on the direction the card is panned
+ 
+ @param direction
+ */
 -(void)showActionButton:(SwipeDirection)direction{
     CGRect  rightButtonFrame = _rightActionButton.frame,
     leftButtonFrame = _leftActionButton.frame;
@@ -409,6 +423,11 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     }];
 }
 
+/*!
+ @description Show/hide Sift view cards
+ 
+ @param visibility The state of the Sift view cards' visibility
+ */
 - (void)setSiftCards:(SiftCardsVisibility)visibility{
     for(SiftCardView *card in _siftViewCards){
         card.hidden = visibility;
@@ -416,6 +435,11 @@ NSString * const SiftViewStateChangeNotification = @"SiftViewStateChangeNotifica
     _cardsAreHidden = visibility;
 }
 
+
+/*!
+ @description Animate Show/Hide views out on either
+                side of the view based on Card pan
+ */
 -(void)hideActionButtons{
     CGRect  rightButtonFrame = _rightActionButton.frame,
     leftButtonFrame = _leftActionButton.frame;

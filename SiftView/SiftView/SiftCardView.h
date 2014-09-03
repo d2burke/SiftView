@@ -40,6 +40,7 @@
 @property (copy, nonatomic) UITapGestureRecognizer *tapGesture;
 @property (copy, nonatomic) UITapGestureRecognizer *swipeGesture;
 
+@property (copy, nonatomic) UIButton *playButton;
 @property (copy, nonatomic) PlayButton *videoPlayButton;
 @property (copy, nonatomic) WhiteArcLoader *videoLoader;
 @property (strong, nonatomic) MPMoviePlayerController *player;
